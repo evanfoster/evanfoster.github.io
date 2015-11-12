@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Evan's Ramblings</title><link>http://fos.tech/</link><description>A place for me to talk about whatever comes to mind.</description><atom:link type="application/rss+xml" href="http://fos.tech/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 12 Nov 2015 18:40:36 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Hello Internet!</title><link>http://fos.tech/posts/hello-internet/</link><dc:creator>Evan Foster</dc:creator><description>&lt;div&gt;&lt;!-- 
+.. title: Hello Internet!
+.. slug: hello-internet
+.. date: 2015-11-12 11:25:06 UTC-07:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+--&gt;
+
+&lt;h2&gt;Hello internet!&lt;/h2&gt;
+&lt;p&gt;Write your post here.&lt;br&gt;
+This is a bunch of stuff.&lt;/p&gt;&lt;/div&gt;</description><guid>http://fos.tech/posts/hello-internet/</guid><pubDate>Thu, 12 Nov 2015 18:25:06 GMT</pubDate></item></channel></rss>

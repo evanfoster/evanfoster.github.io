@@ -1,0 +1,4 @@
+Sitemap: http://fos.tech/sitemapindex.xml
+
+User-Agent: *
+Host: fos.tech
