@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://fos.tech/</loc>
-  <lastmod>2016-11-10T00:30:00Z</lastmod>
+  <lastmod>2016-11-10T01:16:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/2016/</loc>
@@ -16,54 +16,6 @@
  <url>
   <loc>http://fos.tech/archive.html</loc>
   <lastmod>2016-11-10T01:09:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/</loc>
-  <lastmod>2016-11-10T00:51:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/plugin/markdown/example.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/plugin/notes-server/notes.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/plugin/notes/notes.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/examples/barebones.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/examples/embedded-media.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/examples/math.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/examples/slide-backgrounds.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/test-markdown-element-attributes.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/test-markdown-slide-attributes.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/test-markdown.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/assets/reveal/test/test.html</loc>
-  <lastmod>2016-11-10T00:43:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/categories/</loc>
@@ -78,48 +30,12 @@
   <lastmod>2016-11-10T00:24:00Z</lastmod>
  </url>
  <url>
-  <loc>http://fos.tech/pages/cv.html</loc>
-  <lastmod>2016-11-09T23:53:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/cv.src.html</loc>
-  <lastmod>2016-11-09T23:39:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/resume-2.html</loc>
-  <lastmod>2016-11-09T23:30:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/resume-2.src.html</loc>
-  <lastmod>2016-11-09T23:30:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/resume-3.html</loc>
-  <lastmod>2016-11-09T23:30:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/resume-3.src.html</loc>
-  <lastmod>2016-11-09T23:30:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/resume.html</loc>
-  <lastmod>2016-11-10T00:18:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/pages/resume.src.html</loc>
-  <lastmod>2016-11-10T00:16:00Z</lastmod>
- </url>
- <url>
   <loc>http://fos.tech/pages/resume/</loc>
   <lastmod>2016-11-10T00:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/pages/resume/index.src.html</loc>
   <lastmod>2016-11-10T00:16:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/posts/pyroute2-linux-networking-made-easy.html</loc>
-  <lastmod>2016-11-10T00:18:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/posts/pyroute2-linux-networking-made-easy/</loc>
