@@ -137,6 +137,7 @@ NAVIGATION_LINKS = {
         ("/archive.html", "Archive"),
         ("/categories/index.html", "Tags"),
         ("/rss.xml", "RSS feed"),
+        ("https://www.linkedin.com/in/evansterlingfoster", "LinkedIn"),
         ("/resume.pdf", "Resume")
     ),
 }
