@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Evan's Ramblings</title><link>http://fos.tech/</link><description>A place for me to talk about whatever comes to mind.</description><atom:link href="http://fos.tech/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 14 Jan 2017 02:00:29 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>WCCP - Redundancy and clustering of caches and WAN optimizers</title><link>http://fos.tech/posts/wccp-redundancy-and-clustering-of-caches-and-wan-optimizers/</link><dc:creator>Evan Foster</dc:creator><description>&lt;div&gt;&lt;h3&gt;What is WCCP?&lt;/h3&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Evan's Ramblings</title><link>http://fos.tech/</link><description>A place for me to talk about whatever comes to mind.</description><atom:link href="http://fos.tech/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 06 May 2018 00:34:26 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Easy packet traces using remotecap</title><link>http://fos.tech/posts/easy-packet-traces-using-remotecap/</link><dc:creator>Evan Foster</dc:creator><description>&lt;div&gt;&lt;p&gt;I hate taking packet captures. I end up taking a ton of them at home and at work. Frankly, this workflow sucks:  &lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Oh shoot, I need to take a packet capture.&lt;/span&gt;
+dev-lappy: ssh root@somewhere.something.net
+somewhere: tcpdump -i any -s &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="s1"&gt;'not port 22'&lt;/span&gt; -w /tmp/foo.cap
+&lt;span class="c1"&gt;# In another terminal after making the traffic I want...&lt;/span&gt;
+dev-lappy: scp root@somewhere.something.net:/tmp/foo.cap captures/something-foo.cap
+dev-lappy: wireshark captures/something-foo.cap
+&lt;/pre&gt;
+
+
+&lt;p&gt;There's all kinds of garbage that can happen along the way:&lt;br&gt;
+- &lt;code&gt;/tmp/&lt;/code&gt; (or wherever you're capturing to) could fill up&lt;br&gt;
+- Somebody else could clobber your capture file (that's a fun one)&lt;br&gt;
+- You might forget to copy the new capture file over&lt;/p&gt;
+&lt;p&gt;And the whole affair just takes &lt;em&gt;forever&lt;/em&gt;. I want live updates! I don't want to fill up precious disk space on my server! I want my capture file to be on my machine!&lt;/p&gt;
+&lt;p&gt;Enter &lt;code&gt;remotecap&lt;/code&gt;, something I built because I was sick of this.&lt;/p&gt;
+&lt;p&gt;Here's the workflow with remotecap:  &lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;dev-lappy: remotecap -w captures/something-foo.cap somewhere.something.net
+&lt;span class="c1"&gt;# Screen is cleared and capture size and rate of growth is printed.&lt;/span&gt;
+&lt;span class="c1"&gt;# This can be disabled by using -q/--quiet&lt;/span&gt;
+
+&lt;span class="c1"&gt;# In another terminal&lt;/span&gt;
+dev-lappy: wireshark captures/something-foo.cap
+&lt;span class="c1"&gt;# Now, make the traffic you want to view and simply hit &amp;lt;C-r&amp;gt; in Wireshark&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;code&gt;remotecap&lt;/code&gt; will &lt;code&gt;ssh&lt;/code&gt; into the target server, run &lt;code&gt;tcpdump&lt;/code&gt;, and then pipe the outback back over &lt;code&gt;ssh&lt;/code&gt; to a file on your system. That's not all it can do, however!&lt;/p&gt;
+&lt;p&gt;Here's a more complicated example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;remotecap -w captures/some-weird-problem --user notroot --sudo &lt;span class="se"&gt;\&lt;/span&gt;
+          --command-path /stupid/path/tcpdump --filter &lt;span class="s1"&gt;'port 80 and port 443 and port 1234'&lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+          --key ~/somerandomkey --packet-length &lt;span class="m"&gt;1234&lt;/span&gt; --known-hosts None&lt;span class="se"&gt;\&lt;/span&gt;
+          &lt;span class="m"&gt;10&lt;/span&gt;.0.0.5 &lt;span class="m"&gt;1&lt;/span&gt;.2.3.4:2022 example.org:4561
+&lt;/pre&gt;
+
+
+&lt;p&gt;This will run &lt;code&gt;tcpdump&lt;/code&gt; on three machines simultaneously and put them in a folder named &lt;code&gt;some-weird-problem&lt;/code&gt; as &lt;code&gt;$HOST.cap&lt;/code&gt;, e.g. &lt;code&gt;some-weird-problem/10.0.0.5.cap&lt;/code&gt;. 
+It also logs in as a non-root user and then uses &lt;code&gt;sudo&lt;/code&gt; to escalate privileges on these machines. The other options are pretty self-explanatory for anyone that has used &lt;code&gt;ssh&lt;/code&gt; or &lt;code&gt;tcpdump&lt;/code&gt;. My favorite thing is that you can specify the &lt;code&gt;ssh&lt;/code&gt; listening port per host using &lt;code&gt;:&lt;/code&gt; to separate the host from the port.&lt;/p&gt;
+&lt;p&gt;Internally, &lt;code&gt;remotecap&lt;/code&gt; is built on top of &lt;code&gt;asyncio&lt;/code&gt;, using &lt;code&gt;asyncssh&lt;/code&gt; to do &lt;code&gt;ssh&lt;/code&gt; connections and stream the output, and &lt;code&gt;aiofiles&lt;/code&gt; to allow file I/O that won't block the event loop. 
+Because of this, it performs pretty well. I've been able to take captures on systems that are recieving 500 Mb/s or more.&lt;/p&gt;
+&lt;p&gt;To use &lt;code&gt;remotecap&lt;/code&gt;, you need to have &lt;code&gt;python &amp;gt;= 3.6&lt;/code&gt; on your system. &lt;code&gt;remotecap&lt;/code&gt; has been tested on Linux and should &lt;em&gt;probably&lt;/em&gt; work on MacOS. I have no clue if this will work on Windows, so sorry there!&lt;/p&gt;
+&lt;p&gt;To install, simply do the following:  &lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# You could do this with system Python, but that's not really a great idea.&lt;/span&gt;
+&lt;span class="c1"&gt;# All file paths below are just examples. You can put this virtualenv wherever you want.&lt;/span&gt;
+dev-lappy: python3 -m venv ~/remotecap
+dev-lappy: &lt;span class="nb"&gt;source&lt;/span&gt; ~/remotecap/bin/activate
+&lt;span class="c1"&gt;# Make sure that you have libsodium installed. Install it using apt/dnf/pacman/zypper&lt;/span&gt;
+&lt;span class="c1"&gt;# This also might need a compiler if the wheels don't work.&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;remotecap&lt;span class="o"&gt;)&lt;/span&gt; dev-lappy: pip install remotecap&lt;span class="o"&gt;[&lt;/span&gt;recommends&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;# Bunch of garbage prints&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;remotecap&lt;span class="o"&gt;)&lt;/span&gt; dev-lappy: remotecap --help
+&lt;/pre&gt;
+
+
+&lt;p&gt;I may create packages for various distros using &lt;code&gt;fpm&lt;/code&gt; at some point, but for now, just use &lt;code&gt;pip&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you run into any issues or just want to see the source, head on over to &lt;a href="https://github.com/evanfoster/remotecap"&gt;&lt;code&gt;remotecap on Github&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Happy trails!&lt;/p&gt;&lt;/div&gt;</description><category>capture</category><category>remotecap</category><category>tcpdump</category><guid>http://fos.tech/posts/easy-packet-traces-using-remotecap/</guid><pubDate>Sat, 05 May 2018 23:23:59 GMT</pubDate></item><item><title>WCCP - Redundancy and clustering of caches and WAN optimizers</title><link>http://fos.tech/posts/wccp-redundancy-and-clustering-of-caches-and-wan-optimizers/</link><dc:creator>Evan Foster</dc:creator><description>&lt;div&gt;&lt;h3&gt;What is WCCP?&lt;/h3&gt;
 &lt;p&gt;&lt;a href="http://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipapp/configuration/12-4t/iap-12-4t-book/iap-wccp.html"&gt;WCCP&lt;/a&gt; is a service offered on Cisco routers and switches that makes it simple to deploy web caches and WAN optimizers among other things. It offers a lot of functionality including failover, redundancy and clustering, and complete control of ports while requiring minimal configuration changes on the switch or router; almost all of the config is done on the cache or WAN optimizer, allowing your vendor to do what they do best. This power and configuration simplicity comes at the cost of a few pretty serious caveats. I'll get onto those, but first I need to explain how traffic flows. For those who already know WCCP, I'm going to be focusing on L2/Mask inbound redirection, so if you need guidance on GRE/Hash and/or outbound redirection, you'll want to look elsewhere. Also, this post is going to focus soley on caches. WAN optimizers have some trickery that I don't feel like covering right now, but there are some good guides out there on how to deploy those. Finally, I don't really want to cover how web caching works. I'll save that for another article.&lt;/p&gt;
 &lt;h3&gt;How WCCP works (roughly)&lt;/h3&gt;
 &lt;p&gt;Check out this diagram:&lt;/p&gt;
@@ -7,9 +63,9 @@
 &lt;p&gt;This is how I explain the flow of WCCP to customers. The client makes a request (1), the router redirects that request to the cache (2), the cache goes and fetches the request from the webserver via the router (3 + 4), the webserver responds to the cache (5 + 6), and finally the cache sends the response to the client (7 + 8). It's important for the traffic to flow in this "sideways T" configuration. If you don't do it this way, &lt;em&gt;things will break&lt;/em&gt;. Next, a quick config primer.&lt;/p&gt;
 &lt;h3&gt;WCCP config on the router or switch&lt;/h3&gt;
 &lt;p&gt;The configuration for WCCP is stupid simple on the router. Let's say that in the example above, there are three VLANs. VLAN 10 is for the clients, VLAN 20 is for the cache, and VLAN 30 is for the internet. Next, let's say that we want to redirect port 80 TCP traffic (HTTP). WCCP uses service groups to allow you to redirect several ports at once. These can range from 0 to 100, but 0 is a special, static group that only redirects destination port 80 TCP traffic. On a router, it can also be written as &lt;code&gt;web-cache&lt;/code&gt;. In this example, we'll use the &lt;code&gt;web-cache&lt;/code&gt; service group. Here's what the config would look like on the router:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;ip wccp web-cache
-interface vlan 10
-    ip wccp web-cache redirect in
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;ip&lt;/span&gt; &lt;span class="nx"&gt;wccp&lt;/span&gt; &lt;span class="nx"&gt;web&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;cache&lt;/span&gt;
+&lt;span class="kr"&gt;interface&lt;/span&gt; &lt;span class="nx"&gt;vlan&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
+    &lt;span class="nx"&gt;ip&lt;/span&gt; &lt;span class="nx"&gt;wccp&lt;/span&gt; &lt;span class="nx"&gt;web&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;cache&lt;/span&gt; &lt;span class="nx"&gt;redirect&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;
 &lt;/pre&gt;
 
 
@@ -86,7 +142,7 @@ WCCP doesn't operate on switched traffic. What do I mean by that? Basically, if 
 
 
 &lt;p&gt;&lt;code&gt;register_callback&lt;/code&gt; returns the ID of the callback which you'll need to cleanly stop it, so make sure you capture that! To test, we'll pop on over to a shell and add an address to &lt;code&gt;eth0&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;evan@goliath ~&lt;span class="o"&gt;]&lt;/span&gt;$ sudo ip addr add dev eth0 192.168.2.50/24
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;evan@goliath ~&lt;span class="o"&gt;]&lt;/span&gt;$ sudo ip addr add dev eth0 &lt;span class="m"&gt;192&lt;/span&gt;.168.2.50/24
 &lt;/pre&gt;
 
 

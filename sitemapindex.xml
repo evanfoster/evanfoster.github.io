@@ -6,15 +6,31 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>http://fos.tech/categories/capture.xml</loc>
+  <lastmod>2018-05-06T00:34:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://fos.tech/categories/remotecap-tcpdump-capture.xml</loc>
+  <lastmod>2018-05-06T00:33:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://fos.tech/categories/remotecap.xml</loc>
+  <lastmod>2018-05-06T00:34:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://fos.tech/categories/tcpdump.xml</loc>
+  <lastmod>2018-05-06T00:34:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://fos.tech/galleries/rss.xml</loc>
-  <lastmod>2017-01-14T02:00:00Z</lastmod>
+  <lastmod>2018-05-06T00:29:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/rss.xml</loc>
-  <lastmod>2017-01-14T02:00:00Z</lastmod>
+  <lastmod>2018-05-06T00:34:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/sitemap.xml</loc>
-  <lastmod>2017-01-14T02:00:00Z</lastmod>
+  <lastmod>2018-05-06T00:34:00Z</lastmod>
  </sitemap>
 </sitemapindex>

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<html prefix="
+og: http://ogp.me/ns# article: http://ogp.me/ns/article#
+" vocab="http://ogp.me/ns" lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>pyroute2 - Linux networking made easy | Evan's Ramblings</title>
+<title>Evan's Ramblings · pyroute2 - Linux networking made easy </title>
 <link href="../../assets/css/all.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700%7CAbril+Fatface">
+<meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="http://fos.tech/posts/pyroute2-linux-networking-made-easy/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Evan Foster">
@@ -18,56 +21,50 @@ pyroute2 is a Python library that uses Netlink sockets to interact with the Linu
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-11-05T16:05:17-06:00">
 </head>
-<body>
+<body class="">
     <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
-    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
-            styles, `#sidebar-checkbox` for behavior. -->
-    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox"><!-- Toggleable sidebar --><div class="sidebar" id="sidebar">
-        <div class="sidebar-item">
-            <p>A reserved <a href="https://getnikola.com" target="_blank">Nikola</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a> for Jekyll,
-            ported to Nikola by <a href="https://twitter.com/ralsina" target="_blank">@ralsina</a>.</p>
-        </div>
-        
-    <nav id="menu" role="navigation" class="sidebar-nav"><a class="sidebar-nav-item" href="../../archive.html">Archive</a>
+
+    <div class="hsidebar">
+        <div class="container sidebar-sticky">
+            <div class="sidebar-about">
+              <h1>
+                <a href="http://fos.tech/">
+                      <h1 id="brand"><a href="http://fos.tech/" title="Evan's Ramblings" rel="home">
+
+        <span id="blog-title">Evan's Ramblings</span>
+    </a></h1>
+
+                </a>
+              </h1>
+                <p class="lead">A place for me to talk about whatever comes to mind.</p>
+
+            </div>
+                <nav id="menu" role="navigation" class="sidebar-nav"><a class="sidebar-nav-item" href="../../archive.html">Archive</a>
         <a class="sidebar-nav-item" href="../../categories/index.html">Tags</a>
         <a class="sidebar-nav-item" href="../../rss.xml">RSS feed</a>
         <a class="sidebar-nav-item" href="https://www.linkedin.com/in/evansterlingfoster">LinkedIn</a>
         <a class="sidebar-nav-item" href="../../resume.pdf">Resume</a>
     
     
-    </nav>
+    </nav><footer id="footer"><span class="copyright">
+              Contents © 2018         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            </span>
+            
+            
+        </footer>
 </div>
+    </div>
 
-    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-         content to avoid any CSS collisions with our real content. -->
-    <div class="wrap">
-      <div class="masthead">
-        <div class="container">
-          
-    <h3 id="brand" class="masthead-title">
-      <a href="http://fos.tech/" title="Evan's Ramblings" rel="home">Evan's Ramblings</a>
-    </h3>
+    <div class="content container" id="content">
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><h1 class="post-title p-name"><a href="." class="u-url">pyroute2 - Linux networking made easy</a></h1>
 
-        </div>
-      </div>
+    <span class="post-date">
+      <time class="published dt-published" datetime="2016-11-05T16:05:17-06:00" itemprop="datePublished" title="2016-11-05 16:05">2016-11-05 16:05</time></span>
 
-      <div class="container content" id="content">
-        
-<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="post-title p-name entry-title" itemprop="headline name"><a href="." class="u-url">pyroute2 - Linux networking made easy</a></h1>
+    
+    
 
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Evan Foster</span></p>
-            <p class="dateline"><a href="." rel="bookmark"><time class="post-date published dt-published" datetime="2016-11-05T16:05:17-06:00" itemprop="datePublished" title="2016-11-05 16:05">2016-11-05 16:05</time></a></p>
-                <p class="commentline">
-        
-    <a href="#disqus_thread" data-disqus-identifier="cache/posts/pyroute2-linux-networking-made-easy.html">Comments</a>
-
-
-        </p>
-</div>
-        
-
-    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div class="e-content entry-content" itemprop="articleBody text">
     <div>
 <h3>What is pyroute2?</h3>
 <p><a href="https://github.com/svinota/pyroute2">pyroute2</a> is a Python library that uses <a href="https://en.wikipedia.org/wiki/Netlink">Netlink sockets</a> to interact with the Linux networking stack. It is, in my opinion, the single best way to do anything networking related on Linux machines. Beyond simple things like replacing subprocess calls to <code>ifconfig</code> to get and change networking information, it offers a fantastic way to monitor networking related changes (interfaces up and down, new neighbors) and perform actions based upon those. I'll show you how to do that in this post. First, you need to understand some things about Netlink.</p>
@@ -119,7 +116,7 @@ pyroute2 is a Python library that uses Netlink sockets to interact with the Linu
 
 
 <p><code>register_callback</code> returns the ID of the callback which you'll need to cleanly stop it, so make sure you capture that! To test, we'll pop on over to a shell and add an address to <code>eth0</code>.</p>
-<pre class="code literal-block"><span></span><span class="o">[</span>evan@goliath ~<span class="o">]</span>$ sudo ip addr add dev eth0 192.168.2.50/24
+<pre class="code literal-block"><span></span><span class="o">[</span>evan@goliath ~<span class="o">]</span>$ sudo ip addr add dev eth0 <span class="m">192</span>.168.2.50/24
 </pre>
 
 
@@ -155,14 +152,23 @@ pyroute2 is a Python library that uses Netlink sockets to interact with the Linu
 <p>If you find any mistakes in this post, please let me know about them by emailing me at the address in the footer. I've simplified things quite a bit here to make this post easier to digest, so if I've cut out something important I'd like to fix it.</p>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul class="pager hidden-print">
-<li class="next">
-                <a href="../wccp-redundancy-and-clustering-of-caches-and-wan-optimizers/" rel="next" title="WCCP - Redundancy and clustering of caches and WAN optimizers">Next post</a>
-            </li>
-        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
-        
-        
-        <div id="disqus_thread"></div>
+    <aside class="postpromonav"><nav><div class="pager hidden-print pagination">
+
+            <span class="previous pagination-item older">
+                Previous post
+            </span>
+
+
+            <span class="next pagination-item newer">
+                <a href="../wccp-redundancy-and-clustering-of-caches-and-wan-optimizers/" rel="next" title="WCCP - Redundancy and clustering of caches and WAN optimizers">
+Next post
+              </a>
+            </span>
+
+        </div>
+
+    </nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+                        <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="evansramblings",
             disqus_url="http://fos.tech/posts/pyroute2-linux-networking-made-easy/",
@@ -181,18 +187,12 @@ pyroute2 is a Python library that uses Netlink sockets to interact with the Linu
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section></article><script>var disqus_shortname="evansramblings";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2017         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
-            
-        </footer>
+        </section></article><script>var disqus_shortname="evansramblings";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 </div>
-    </div>
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
     
     
-    
-            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
-    moment.locale("en");
-    fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates -->
+        
+
 </body>
 </html>
