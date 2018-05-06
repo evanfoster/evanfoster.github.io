@@ -59,11 +59,11 @@ og: http://ogp.me/ns# article: http://ogp.me/ns/article#
     <div>
 <p>I hate taking packet captures. I end up taking a ton of them at home and at work. Frankly, this workflow sucks:  </p>
 <pre class="code literal-block"><span></span><span class="c1"># Oh shoot, I need to take a packet capture.</span>
-dev-lappy: ssh root@somewhere.something.net
-somewhere: tcpdump -i any -s <span class="m">0</span> <span class="s1">'not port 22'</span> -w /tmp/foo.cap
+evan: ssh root@host.something.net
+host: tcpdump -i any -s <span class="m">0</span> <span class="s1">'not port 22'</span> -w /tmp/foo.cap
 <span class="c1"># In another terminal after making the traffic I want...</span>
-dev-lappy: scp root@somewhere.something.net:/tmp/foo.cap captures/something-foo.cap
-dev-lappy: wireshark captures/something-foo.cap
+evan: scp root@host.something.net:/tmp/foo.cap captures/foo.cap
+evan: wireshark captures/foo.cap
 </pre>
 
 
@@ -74,12 +74,13 @@ dev-lappy: wireshark captures/something-foo.cap
 <p>And the whole affair just takes <em>forever</em>. I want live updates! I don't want to fill up precious disk space on my server! I want my capture file to be on my machine!</p>
 <p>Enter <code>remotecap</code>, something I built because I was sick of this.</p>
 <p>Here's the workflow with remotecap:  </p>
-<pre class="code literal-block"><span></span>dev-lappy: remotecap -w captures/something-foo.cap somewhere.something.net
-<span class="c1"># Screen is cleared and capture size and rate of growth is printed.</span>
+<pre class="code literal-block"><span></span>evan: remotecap -w captures/foo.cap host.something.net
+<span class="c1"># Screen is cleared and capture size and rate of growth is </span>
+<span class="c1"># printed.</span>
 <span class="c1"># This can be disabled by using -q/--quiet</span>
 
 <span class="c1"># In another terminal</span>
-dev-lappy: wireshark captures/something-foo.cap
+evan: wireshark captures/foo.cap
 <span class="c1"># Now, make the traffic you want to view and simply hit &lt;C-r&gt; in Wireshark</span>
 </pre>
 
@@ -87,27 +88,30 @@ dev-lappy: wireshark captures/something-foo.cap
 <p><code>remotecap</code> will <code>ssh</code> into the target server, run <code>tcpdump</code>, and then pipe the outback back over <code>ssh</code> to a file on your system. That's not all it can do, however!</p>
 <p>Here's a more complicated example:</p>
 <pre class="code literal-block"><span></span>remotecap -w captures/some-weird-problem --user notroot --sudo <span class="se">\</span>
-          --command-path /stupid/path/tcpdump --filter <span class="s1">'port 80 and port 443 and port 1234'</span><span class="se">\</span>
-          --key ~/somerandomkey --packet-length <span class="m">1234</span> --known-hosts None<span class="se">\</span>
+          --command-path /stupid/path/tcpdump <span class="se">\</span>
+          --filter <span class="s1">'port 80 and port 443 and port 1234'</span> <span class="se">\</span>
+          --key ~/somerandomkey --packet-length <span class="m">1234</span> <span class="se">\</span>
+          --known-hosts None <span class="se">\</span>
           <span class="m">10</span>.0.0.5 <span class="m">1</span>.2.3.4:2022 example.org:4561
 </pre>
 
 
 <p>This will run <code>tcpdump</code> on three machines simultaneously and put them in a folder named <code>some-weird-problem</code> as <code>$HOST.cap</code>, e.g. <code>some-weird-problem/10.0.0.5.cap</code>. 
 It also logs in as a non-root user and then uses <code>sudo</code> to escalate privileges on these machines. The other options are pretty self-explanatory for anyone that has used <code>ssh</code> or <code>tcpdump</code>. My favorite thing is that you can specify the <code>ssh</code> listening port per host using <code>:</code> to separate the host from the port.</p>
-<p>Internally, <code>remotecap</code> is built on top of <code>asyncio</code>, using <code>asyncssh</code> to do <code>ssh</code> connections and stream the output, and <code>aiofiles</code> to allow file I/O that won't block the event loop. 
+<p>Internally, <code>remotecap</code> is built on top of <code>asyncio</code>, using <code>asyncssh</code> to do <code>ssh</code> connections and stream the output and <code>aiofiles</code> to allow file I/O that won't block the event loop. 
 Because of this, it performs pretty well. I've been able to take captures on systems that are recieving 500 Mb/s or more.</p>
 <p>To use <code>remotecap</code>, you need to have <code>python &gt;= 3.6</code> on your system. <code>remotecap</code> has been tested on Linux and should <em>probably</em> work on MacOS. I have no clue if this will work on Windows, so sorry there!</p>
 <p>To install, simply do the following:  </p>
 <pre class="code literal-block"><span></span><span class="c1"># You could do this with system Python, but that's not really a great idea.</span>
-<span class="c1"># All file paths below are just examples. You can put this virtualenv wherever you want.</span>
-dev-lappy: python3 -m venv ~/remotecap
-dev-lappy: <span class="nb">source</span> ~/remotecap/bin/activate
+<span class="c1"># All file paths below are just examples. You can put this </span>
+<span class="c1"># virtualenv wherever you want.</span>
+evan: python3 -m venv ~/remotecap
+evan: <span class="nb">source</span> ~/remotecap/bin/activate
 <span class="c1"># Make sure that you have libsodium installed. Install it using apt/dnf/pacman/zypper</span>
 <span class="c1"># This also might need a compiler if the wheels don't work.</span>
-<span class="o">(</span>remotecap<span class="o">)</span> dev-lappy: pip install remotecap<span class="o">[</span>recommends<span class="o">]</span>
+<span class="o">(</span>remotecap<span class="o">)</span> evan: pip install remotecap<span class="o">[</span>recommends<span class="o">]</span>
 <span class="c1"># Bunch of garbage prints</span>
-<span class="o">(</span>remotecap<span class="o">)</span> dev-lappy: remotecap --help
+<span class="o">(</span>remotecap<span class="o">)</span> evan: remotecap --help
 </pre>
 
 

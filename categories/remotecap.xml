@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Evan's Ramblings (Posts about remotecap)</title><link>http://fos.tech/</link><description></description><atom:link href="http://fos.tech/categories/remotecap.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 06 May 2018 00:34:26 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Easy packet traces using remotecap</title><link>http://fos.tech/posts/easy-packet-traces-using-remotecap/</link><dc:creator>Evan Foster</dc:creator><description>&lt;div&gt;&lt;p&gt;I hate taking packet captures. I end up taking a ton of them at home and at work. Frankly, this workflow sucks:  &lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Evan's Ramblings (Posts about remotecap)</title><link>http://fos.tech/</link><description></description><atom:link href="http://fos.tech/categories/remotecap.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 06 May 2018 00:59:43 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Easy packet traces using remotecap</title><link>http://fos.tech/posts/easy-packet-traces-using-remotecap/</link><dc:creator>Evan Foster</dc:creator><description>&lt;div&gt;&lt;p&gt;I hate taking packet captures. I end up taking a ton of them at home and at work. Frankly, this workflow sucks:  &lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Oh shoot, I need to take a packet capture.&lt;/span&gt;
-dev-lappy: ssh root@somewhere.something.net
-somewhere: tcpdump -i any -s &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="s1"&gt;'not port 22'&lt;/span&gt; -w /tmp/foo.cap
+evan: ssh root@host.something.net
+host: tcpdump -i any -s &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="s1"&gt;'not port 22'&lt;/span&gt; -w /tmp/foo.cap
 &lt;span class="c1"&gt;# In another terminal after making the traffic I want...&lt;/span&gt;
-dev-lappy: scp root@somewhere.something.net:/tmp/foo.cap captures/something-foo.cap
-dev-lappy: wireshark captures/something-foo.cap
+evan: scp root@host.something.net:/tmp/foo.cap captures/foo.cap
+evan: wireshark captures/foo.cap
 &lt;/pre&gt;
 
 
@@ -16,12 +16,13 @@ dev-lappy: wireshark captures/something-foo.cap
 &lt;p&gt;And the whole affair just takes &lt;em&gt;forever&lt;/em&gt;. I want live updates! I don't want to fill up precious disk space on my server! I want my capture file to be on my machine!&lt;/p&gt;
 &lt;p&gt;Enter &lt;code&gt;remotecap&lt;/code&gt;, something I built because I was sick of this.&lt;/p&gt;
 &lt;p&gt;Here's the workflow with remotecap:  &lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;dev-lappy: remotecap -w captures/something-foo.cap somewhere.something.net
-&lt;span class="c1"&gt;# Screen is cleared and capture size and rate of growth is printed.&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;evan: remotecap -w captures/foo.cap host.something.net
+&lt;span class="c1"&gt;# Screen is cleared and capture size and rate of growth is &lt;/span&gt;
+&lt;span class="c1"&gt;# printed.&lt;/span&gt;
 &lt;span class="c1"&gt;# This can be disabled by using -q/--quiet&lt;/span&gt;
 
 &lt;span class="c1"&gt;# In another terminal&lt;/span&gt;
-dev-lappy: wireshark captures/something-foo.cap
+evan: wireshark captures/foo.cap
 &lt;span class="c1"&gt;# Now, make the traffic you want to view and simply hit &amp;lt;C-r&amp;gt; in Wireshark&lt;/span&gt;
 &lt;/pre&gt;
 
@@ -29,27 +30,30 @@ dev-lappy: wireshark captures/something-foo.cap
 &lt;p&gt;&lt;code&gt;remotecap&lt;/code&gt; will &lt;code&gt;ssh&lt;/code&gt; into the target server, run &lt;code&gt;tcpdump&lt;/code&gt;, and then pipe the outback back over &lt;code&gt;ssh&lt;/code&gt; to a file on your system. That's not all it can do, however!&lt;/p&gt;
 &lt;p&gt;Here's a more complicated example:&lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;remotecap -w captures/some-weird-problem --user notroot --sudo &lt;span class="se"&gt;\&lt;/span&gt;
-          --command-path /stupid/path/tcpdump --filter &lt;span class="s1"&gt;'port 80 and port 443 and port 1234'&lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
-          --key ~/somerandomkey --packet-length &lt;span class="m"&gt;1234&lt;/span&gt; --known-hosts None&lt;span class="se"&gt;\&lt;/span&gt;
+          --command-path /stupid/path/tcpdump &lt;span class="se"&gt;\&lt;/span&gt;
+          --filter &lt;span class="s1"&gt;'port 80 and port 443 and port 1234'&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+          --key ~/somerandomkey --packet-length &lt;span class="m"&gt;1234&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+          --known-hosts None &lt;span class="se"&gt;\&lt;/span&gt;
           &lt;span class="m"&gt;10&lt;/span&gt;.0.0.5 &lt;span class="m"&gt;1&lt;/span&gt;.2.3.4:2022 example.org:4561
 &lt;/pre&gt;
 
 
 &lt;p&gt;This will run &lt;code&gt;tcpdump&lt;/code&gt; on three machines simultaneously and put them in a folder named &lt;code&gt;some-weird-problem&lt;/code&gt; as &lt;code&gt;$HOST.cap&lt;/code&gt;, e.g. &lt;code&gt;some-weird-problem/10.0.0.5.cap&lt;/code&gt;. 
 It also logs in as a non-root user and then uses &lt;code&gt;sudo&lt;/code&gt; to escalate privileges on these machines. The other options are pretty self-explanatory for anyone that has used &lt;code&gt;ssh&lt;/code&gt; or &lt;code&gt;tcpdump&lt;/code&gt;. My favorite thing is that you can specify the &lt;code&gt;ssh&lt;/code&gt; listening port per host using &lt;code&gt;:&lt;/code&gt; to separate the host from the port.&lt;/p&gt;
-&lt;p&gt;Internally, &lt;code&gt;remotecap&lt;/code&gt; is built on top of &lt;code&gt;asyncio&lt;/code&gt;, using &lt;code&gt;asyncssh&lt;/code&gt; to do &lt;code&gt;ssh&lt;/code&gt; connections and stream the output, and &lt;code&gt;aiofiles&lt;/code&gt; to allow file I/O that won't block the event loop. 
+&lt;p&gt;Internally, &lt;code&gt;remotecap&lt;/code&gt; is built on top of &lt;code&gt;asyncio&lt;/code&gt;, using &lt;code&gt;asyncssh&lt;/code&gt; to do &lt;code&gt;ssh&lt;/code&gt; connections and stream the output and &lt;code&gt;aiofiles&lt;/code&gt; to allow file I/O that won't block the event loop. 
 Because of this, it performs pretty well. I've been able to take captures on systems that are recieving 500 Mb/s or more.&lt;/p&gt;
 &lt;p&gt;To use &lt;code&gt;remotecap&lt;/code&gt;, you need to have &lt;code&gt;python &amp;gt;= 3.6&lt;/code&gt; on your system. &lt;code&gt;remotecap&lt;/code&gt; has been tested on Linux and should &lt;em&gt;probably&lt;/em&gt; work on MacOS. I have no clue if this will work on Windows, so sorry there!&lt;/p&gt;
 &lt;p&gt;To install, simply do the following:  &lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# You could do this with system Python, but that's not really a great idea.&lt;/span&gt;
-&lt;span class="c1"&gt;# All file paths below are just examples. You can put this virtualenv wherever you want.&lt;/span&gt;
-dev-lappy: python3 -m venv ~/remotecap
-dev-lappy: &lt;span class="nb"&gt;source&lt;/span&gt; ~/remotecap/bin/activate
+&lt;span class="c1"&gt;# All file paths below are just examples. You can put this &lt;/span&gt;
+&lt;span class="c1"&gt;# virtualenv wherever you want.&lt;/span&gt;
+evan: python3 -m venv ~/remotecap
+evan: &lt;span class="nb"&gt;source&lt;/span&gt; ~/remotecap/bin/activate
 &lt;span class="c1"&gt;# Make sure that you have libsodium installed. Install it using apt/dnf/pacman/zypper&lt;/span&gt;
 &lt;span class="c1"&gt;# This also might need a compiler if the wheels don't work.&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt;remotecap&lt;span class="o"&gt;)&lt;/span&gt; dev-lappy: pip install remotecap&lt;span class="o"&gt;[&lt;/span&gt;recommends&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;remotecap&lt;span class="o"&gt;)&lt;/span&gt; evan: pip install remotecap&lt;span class="o"&gt;[&lt;/span&gt;recommends&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="c1"&gt;# Bunch of garbage prints&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt;remotecap&lt;span class="o"&gt;)&lt;/span&gt; dev-lappy: remotecap --help
+&lt;span class="o"&gt;(&lt;/span&gt;remotecap&lt;span class="o"&gt;)&lt;/span&gt; evan: remotecap --help
 &lt;/pre&gt;
 
 
