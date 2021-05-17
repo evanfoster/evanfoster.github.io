@@ -11,7 +11,7 @@
 <meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://fos.tech/">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/easy-packet-traces-using-remotecap/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/the-solid-steel-yarn-winder/" type="text/html">
 </head>
 <body class="">
     <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -39,7 +39,7 @@
     
     
     </nav><footer id="footer"><span class="copyright">
-              Contents © 2019         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+              Contents © 2021         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
             </span>
             
             
@@ -50,22 +50,151 @@
     <div class="content container" id="content">
     
 <div class="post">
-    <article class="post h-entry post-text"><header><h1 class="post-title p-name"><a href="posts/easy-packet-traces-using-remotecap/" class="u-url">Easy packet traces using remotecap</a></h1>
+    <article class="post h-entry post-text"><header><h1 class="post-title p-name"><a href="posts/the-solid-steel-yarn-winder/" class="u-url">The Solid Steel Yarn Winder</a></h1>
+        <div class="metadata">
+            <span class="post-date dateline"><time class="published dt-published" datetime="2021-05-17T09:47:03-06:00" title="2021-05-17 09:47">2021-05-17 09:47</time></span>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>This is a bit of a strange direction for this blog to take! Over the past few years, I've taken up machining as a hobby. I've found that machining is incredibly emotionally restorative for me and I've really come to love it. I'm still heavily involved with Linux and networking and container orchestration and all that jazz, but metalworking has captured my interest in a way nothing else ever has. So, onto the meat of this!</p>
+<p>I made my girlfriend a yarn winder for her birthday. She had always wanted one but had never gotten around to digging around. I wanted to get her one, but quickly found that I wasn't happy with the commercially available winders out there. They were all either cheap plastic garbage or expensive wooden things. I wanted to get her something nice, but I had my reservations. I liked the wooden winders, but there were some key components I felt should have been made out of metal. This wasn't available, so I decided I would build the most overkill yarn winder possible -- one made from solid 4000 series alloy steel. This post is going to cover the build process. First, I'd like to go over some background info and what a yarn winder is.</p>
+<h3>Yarn winders</h3>
+<p>A lot of the folks reading this might not know much about yarn winders. It's easy to figure out what they do based on the name, but they're actually a bit more complicated than you might expect. When I saw my first yarn winder, I didn't get why it looked the way it did:</p>
+<p><img alt="" src="https://i.imgur.com/r4UkrfG.jpg"></p>
+<p>You'd expect a yarn winder to be something like a vertical tube that just spins to wind up a ball of yarn, so the arrangement above seems a little overcomplicated. There's the large, angled bracket that spins around a stationary peg. The yarn spindle is attached to that angled bracket with a bearing, meaning it can spin freely. The spindle disc is pushed up against the peg in the middle, meaning it also spins as it's whirling around. Here's a video that shows the effect in slow motion:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ASiR83jhI2Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>The disc in this video has a large black sharpie mark on it, showing the slow rotation of the spindle as the whole angled bracket spins around.</p>
+<p>This compound rotation leads to balls of yarn that are relatively consistent in size and can be used from the center out. Rather than pulling the yarn from the outside (which makes the ball wobble around obnoxiously), you can pull the yarn from the center. You can also take large balls of yarn and split them up into smaller, more manageable balls, which is useful for knitting or crocheting projects with many different colors. A yarn winder is also essential when you have fancy yarn that comes on unwound "hanks," since using an unwound hank is very, very frustrating.</p>
+<p>I've probably left out some crucial details or other great uses here, but I've only dabbled with crochet. Onto the design and build!</p>
+<h3>Design</h3>
+<p>I am not a mechanical engineer. It's actually worse than that, since I'm not really mechanically inclined at all. I didn't want to design my own winder and have it crash and burn, so I decided to copy an existing design. <a href="https://www.thingiverse.com/thing:13816">Here's what I started with.</a></p>
+<p><img alt="" src="https://cdn.thingiverse.com/renders/2e/b3/7e/71/88/6364876923_e4c3bcf2fb_o_display_large_preview_featured.jpg"></p>
+<p>This looked like a nice, simple design. There were some features that were clearly targeted towards 3D printing, but most parts seemed like they'd be easy enough to machine. What really sold me is that the designer included STEP files, meaning it would be a cinch to remodel the thing for machining.</p>
+<p>Here's what I arrived at:</p>
+<p><img alt="" src="images/yarn-winder-drawing.png"></p>
+<p>It's generally similar, although I made these changes:</p>
+<ul>
+<li>The drive pulley doesn't have those weight-saving spokes</li>
+<li>Fasteners now thread directly into parts, rather than relying on nuts</li>
+<li>The bearing shafts are now proper shafts and not screws</li>
+<li>The 624 and 606 bearings have been replaced by 608 bearings</li>
+<li>The spring-loaded drive cone has been redesigned to actually function as intended</li>
+<li>The handle spins in an oilite bronze bushing and is retained by a circlip, rather than a bearing and a fastener</li>
+</ul>
+<p>There are probably other changes I've made and forgotten about, so I'll edit this post if I think of them.</p>
+<h3>Build</h3>
+<p>This build took a while. I'm not a very good machinist, I don't have a lot of tools, and the tools I do have tend to be pretty small and/or cheap. I'm also not very good at remembering to take pictures, so there are going to be parts that are just a lot of text.</p>
+<p>The first part I decided to make was the angled bracket.</p>
+<p>Have you ever decided to do something the hard way? I decided to do this the hard way. The stupidly, terribly, awfully hard way. First, I lopped off a chunk of some 4340:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FGHHo6HWAPA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Then I squared up the stock on my lathe and brought it to size:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_PkefWwGm1s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>I used my lathe because my mill (a Grizzly G8689) is <em>not</em> up to the task of removing 0.250" of 4340 steel. And yes, I am using carbide for this hideously interrupted cut. I probably burned up about $30 worth of inserts when squaring up this stock. I didn't have a bench grinder and I haven't yet learned how to properly sharpen HSS tools. I did go out and buy some HSS inserts later on, but I wasn't using them here. </p>
+<p>After the block was to size, I drilled and bored the central hole on the lathe, and then moved over to the mill to drill the clearance holes for the socket head cap screws. I then marked out the stock:</p>
+<p><img alt="" src="images/shrink-IMG_20200905_141547.jpg"></p>
+<p>I then set about milling the stock down to the lines.</p>
+<p>This took forever. This was seriously the WORST way I could have gone about this. Remember when I said my mill wasn't up to the task of removing 0.250" of tough steel? That didn't stop me from using it to machine away 0.500". This was just</p>
+<p><img alt="" src="images/shrink-PXL_20200926_201118227.jpg"></p>
+<p>really</p>
+<p><img alt="" src="images/shrink-PXL_20200926_220534791.jpg"></p>
+<p>awfully</p>
+<p><img alt="" src="images/shrink-PXL_20201010_015635179.jpg"></p>
+<p>TERRIBLY slow.</p>
+<p>Pictured here is my cool little sine table I picked up from a retiring tool and die maker. What's less cool is my clamping system. I'm using 1/4"-20 all-thread and some brass threaded inserts as nuts. I guess I didn't have any 1/4-20 hardware, so I made due with what I had. Other problems include a dull cutter made even more dull by constant rubbing, a setup with crappy rigidity, a mill that could only take .020" cuts at a time, and a lack of cleanliness. I really should have been cleaning up some of these chips as I went along.</p>
+<p>Eventually, I got it to the line, but I don't have any photos of that. I was so tired and done by this point that I just failed to capture anything for a while.</p>
+<p>You might be asking yourself one of these questions:</p>
+<ol>
+<li>Why didn't you just make this out of two pieces and then fasten them together?<br>
+   Honestly, because that's just not as cool. I wanted this to be a single, fully machined piece of metal  </li>
+<li>OK, so why not weld it?<br>
+   Because I don't know how to weld, and the only welding equipment I have is an old oxy-acetylene rig.  </li>
+<li>Fine, why not bend it and then machine it?<br>
+   I don't have any bending equipment, nor do I have the space for it.  </li>
+<li>OK buddy, why not just use a saw to remove the bulk of the material?<br>
+   I don't have a vertical bandsaw to do that. My horizontal bandsaw is horizontal <em>only</em>, and I don't know anyone who owns a metal-cutting vertical bandsaw.  </li>
+</ol>
+<p>The right thing to do probably would have been to ask a local machine shop to just deck off a bunch of the material on a big mill or saw, but I was doing this during the middle of a global pandemic and I didn't feel particularly social. </p>
+<p>The rest of the build is mostly focused around bearing fits. First up was the disc that rides on the drive cone and spins the yarn spindle slowly:</p>
+<p><img alt="" src="images/shrink-PXL_20201107_182805618.jpg"></p>
+<p><img alt="" src="images/shrink-PXL_20201115_215914260.jpg"></p>
+<p>You can see in the above photo that a bearing has been pressed in, and I'd like to take a moment to talk about how I underestimated how difficult it is to make a good bearing fit. </p>
+<p>Bearings are incredibly precise things. They can spin crazy fast and perform incredibly well, but you <em>need</em> to make sure that they're being held correctly. In the case of a 608 bearing where the middle shaft is stationary and the outer housing spins under heavy load and low speeds, the shaft needs to be 0.3150" <strong>exactly</strong>. The housing that the bearing is pressed into has to be 0.8661" <strong>exactly</strong>, which is <strong>not</strong> easy to do on a lathe from the 1950s. I didn't grab any pictures from making the bearing housing, but it took well over two hours of careful measurement and small cuts with a boring bar. I managed to nail every single bearing housing fit, although I did screw up and make the bearing shaft for the yarn spindle .0002" small.</p>
+<p>I didn't get photos of making all of these parts, but here's the angled bracket, the disc, a small bearing shaft, and the yarn spindle all together:</p>
+<p><img alt="" src="images/shrink-PXL_20201116_003336080.jpg"></p>
+<p>After this, I started making the "pulley", spring loaded drive cone, and drive shaft that all of this rides on. Here's a video of some nice chips I was getting when machining the drive shaft:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EIzl-BkexpQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>I didn't really get any good photos of this at the time, so here's some pictures <em>from the future</em> of how this all works.</p>
+<p><img alt="" src="images/shrink-PXL_20210503_190929090.jpg"></p>
+<p>There are 5 parts in this photo: the "pulley" (the large part with the threaded holes that spins on those bearings), the drive cone (stationary), the drive shaft (stationary), a spring, and a pin. The drive shaft has a (very sloppy) slot milled in it:</p>
+<p><img alt="" src="images/shrink-PXL_20210503_191039320.jpg"></p>
+<p>The drive cone sits on a spring which rests on top of the inner race of that bearing:</p>
+<p><img alt="" src="images/shrink-PXL_20210503_191056933.jpg"><img alt="" src="images/shrink-PXL_20210503_191044164.jpg"></p>
+<p>The drive cone is then retained by a small pin:</p>
+<p><img alt="" src="images/shrink-PXL_20210503_191050206.jpg"></p>
+<p>This keeps the drive cone from spinning, but lets it push up hard into the yarn spindle disc. It's a pretty neat little mechanism! It doesn't seem to work right in the original design, so I made a few tweaks here to get it functional.</p>
+<p>At this point, the yarn winder project was put on hold while I made a set of Olympic-style dumbbells for my sister. My shop is also completely unheated, so I wasn't motivated to get back out for several months during the winter, and this is where the number of in-progress pictures really took a turn for the worse.</p>
+<p>After getting back out to the shop, I made the drive shaft for the main drive pulley:</p>
+<p><img alt="" src="images/shrink-PXL_20210409_235005459.jpg"></p>
+<p>The bearing shaft and threads were overly long, but I wanted to hold of on cutting them to length until after the drive pulley and base plate were done as I was contemplating some design changes.</p>
+<p>This is literally the only photo I have of making the main drive pulley 😅:</p>
+<p><img alt="" src="images/shrink-PXL_20210410_195450539.jpg"></p>
+<p>This also had two bearings in it, as well as a 0.500" reamed hole for a bronze oilite bushing. I made a handle with a 0.499" shaft to ride in that bushing. There's a small groove on one side for a circlip:</p>
+<p><img alt="" src="images/shrink-PXL_20210503_191256502.jpg"><img alt="" src="images/shrink-PXL_20210503_191321301.jpg"></p>
+<p>The original design just had the winder attached to a piece of plastic or wood. I had initially thought that would have been fine, but I realized around this point that the winder mechanism was too heavy and off-balance for this to work. I decided I'd make a metal sub-plate that would provide some rigidity for the machine and reduce the stress on the wood.</p>
+<p>I grabbed what I <em>thought</em> was some steel and started machining. The piece I had was too large to fit in my horizontal bandsaw and I didn't feel like being shaken to death by my Skilsaw, so I set it up on the mill:</p>
+<p><img alt="" src="images/shrink-PXL_20210419_001931935.jpg"></p>
+<p>That's a 1/2" solid carbide rougher, slotting .075" at a time through this random piece of plate. This is on my shiny, shiny new Precision Matthews PM-728VT so I don't have to water-torture my way through this stock.</p>
+<p>You can also probably tell from the chips that this isn't steel, it's ductile iron. I had been using cutting oil, so gritty iron shavings got everywhere and I'm <em>still</em> cleaning them up.</p>
+<p>After I had the stock roughly to size, I needed to get it down to final dimensions and try to leave a nice surface finish. I had received this ridiculous cutter as a part of an eBay lot, so I figured I'd give it a go:</p>
+<p><img alt="" src="images/shrink-PXL_20210420_213040702.jpg"></p>
+<p>I mean, just <strong>look</strong> at this glorious ladder of steel! It's a 2" Niagara roughing endmill and it's hilariously large for my machine. I mounted it up in my mill and got to machining:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xk0TNCPwE1k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Nice and smokey. The cutter was super sharp and left a pretty good finish on the sides:</p>
+<p><img alt="" src="images/shrink-PXL_20210421_025103551.jpg"></p>
+<p>I flipped to the faces, and the story wasn't as good...</p>
+<p><img alt="" src="images/shrink-PXL_20210423_020538320.jpg"></p>
+<p>So then I got to spend a lot of time at the lapping plate. This is a surface plate dedicated for lapping with sandpaper, so don't be alarmed:</p>
+<p><img alt="" src="images/shrink-PXL_20210424_001056909.jpg"></p>
+<p>I spent a lot of time here. All told, it took 10 hours of lapping to remove most of the tool marks on this piece of ductile iron. It looks like my mill head was out of tram, meaning my cuts weren't flat. Here are some progress pictures:</p>
+<p><img alt="" src="images/shrink-PXL_20210424_013730858.jpg"><img alt="" src="images/shrink-PXL_20210424_185918926.jpg"><img alt="" src="images/shrink-PXL_20210425_022905153.jpg"><img alt="" src="images/shrink-PXL_20210425_224256650.jpg"></p>
+<p>And that's where I left it. There are still some tool marks on the ends of the part, but my back was starting to hurt from all the lapping I was doing so I called it.</p>
+<p>Next up, I made some little brass feet and then machined the wood:</p>
+<p><img alt="" src="images/shrink-PXL_20210502_210440300.jpg"></p>
+<p>I hate wood. The tools to work with it are loud, the sawdust makes me sneeze and gives me sinus infections, and it's just not cool like metal is. I knew I wanted a wooden base, though. The brass, black walnut, and steel would look great together and the wood might soak up a bit of vibration.</p>
+<p>I gave the wood a good sanding down (120 -&gt; 180 -&gt; 220 on an orbital sander):</p>
+<p><img alt="" src="images/shrink-PXL_20210502_232402308.jpg"></p>
+<p>And then started applying Tru-oil. I actually really screwed this up the first time. My coats were incredibly thick and weren't drying:</p>
+<p><img alt="" src="images/shrink-PXL_20210503_015801522.jpg"></p>
+<p>I kept applying coats this way until it all went wrong. I had to sand off all of the finish and then retry. This time, I used <strong>much</strong> lighter coats until the wood was in a somewhat happy state.</p>
+<p>With that, it was time to sand and polish all of the remaining components. I'm not Clickspring, so this means that they got a bit of time with some 320 grit emery paper and some grey Scotchbrite. I hit the brass components with Brasso (which I had never used before and hadn't realized was INCREDIBLY SMELLY thanks to the ammonia) and then laid everything out:</p>
+<p><img alt="" src="images/PXL_20210503_182228996.jpg"></p>
+<p>Once the wood had dried out, it was time to put it together! Note that there are some small Sorbothane washers and bumpers on the feet to soak up the vibration, because this thing is <strong>heavily</strong> off-balance. If I can get my hands on some tungsten then I'll machine a counterweight. In the meantime, the Sorbothane does an admirable job of soaking up the vibrations. </p>
+<p><img alt="" src="images/P5151364.JPG"><img alt="" src="images/P5151366.JPG"><img alt="" src="images/P5151369.JPG"><img alt="" src="images/P5151374.JPG"><img alt="" src="images/P5151377.JPG"></p>
+<p>And of course, here's a video of it winding a ball of yarn:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IvWykre_C3o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>So that's it! The solid steel yarn winder. Hopefully you've enjoyed this. I'll probably be back with more projects in the future, but I think I'm just about done writing for now.</p>
+</div>
+    </div>
+    </article><article class="post h-entry post-text"><header><h1 class="post-title p-name"><a href="posts/easy-packet-traces-using-remotecap/" class="u-url">Easy packet traces using remotecap</a></h1>
         <div class="metadata">
             <span class="post-date dateline"><time class="published dt-published" datetime="2018-05-05T17:23:59-06:00" title="2018-05-05 17:23">2018-05-05 17:23</time></span>
         </div>
     </header><div class="e-content entry-content">
     <div>
 <p>I hate taking packet captures. I end up taking a ton of them at home and at work. Frankly, this workflow sucks:  </p>
-<pre class="code literal-block"><span></span><span class="c1"># Oh shoot, I need to take a packet capture.</span>
+<pre class="code literal-block"><span class="c1"># Oh shoot, I need to take a packet capture.</span>
 evan: ssh root@host.something.net
 host: tcpdump -i any -s <span class="m">0</span> <span class="s1">'not port 22'</span> -w /tmp/foo.cap
 <span class="c1"># In another terminal after making the traffic I want...</span>
 evan: scp root@host.something.net:/tmp/foo.cap captures/foo.cap
 evan: wireshark captures/foo.cap
 </pre>
-
-
 <p>There's all kinds of garbage that can happen along the way:<br>
 - <code>/tmp/</code> (or wherever you're capturing to) could fill up<br>
 - Somebody else could clobber your capture file (that's a fun one)<br>
@@ -73,7 +202,7 @@ evan: wireshark captures/foo.cap
 <p>And the whole affair just takes <em>forever</em>. I want live updates! I don't want to fill up precious disk space on my server! I want my capture file to be on my machine!</p>
 <p>Enter <code>remotecap</code>, something I built because I was sick of this.</p>
 <p>Here's the workflow with remotecap:  </p>
-<pre class="code literal-block"><span></span>evan: remotecap -w captures/foo.cap host.something.net
+<pre class="code literal-block">evan: remotecap -w captures/foo.cap host.something.net
 <span class="c1"># Screen is cleared and capture size and rate of growth is </span>
 <span class="c1"># printed.</span>
 <span class="c1"># This can be disabled by using -q/--quiet</span>
@@ -82,26 +211,22 @@ evan: wireshark captures/foo.cap
 evan: wireshark captures/foo.cap
 <span class="c1"># Now, make the traffic you want to view and simply hit &lt;C-r&gt; in Wireshark</span>
 </pre>
-
-
 <p><code>remotecap</code> will <code>ssh</code> into the target server, run <code>tcpdump</code>, and then pipe the outback back over <code>ssh</code> to a file on your system. That's not all it can do, however!</p>
 <p>Here's a more complicated example:</p>
-<pre class="code literal-block"><span></span>remotecap -w captures/some-weird-problem --user notroot --sudo <span class="se">\</span>
+<pre class="code literal-block">remotecap -w captures/some-weird-problem --user notroot --sudo <span class="se">\</span>
           --command-path /stupid/path/tcpdump <span class="se">\</span>
           --filter <span class="s1">'port 80 and port 443 and port 1234'</span> <span class="se">\</span>
           --key ~/somerandomkey --packet-length <span class="m">1234</span> <span class="se">\</span>
           --known-hosts None <span class="se">\</span>
           <span class="m">10</span>.0.0.5 <span class="m">1</span>.2.3.4:2022 example.org:4561
 </pre>
-
-
 <p>This will run <code>tcpdump</code> on three machines simultaneously and put them in a folder named <code>some-weird-problem</code> as <code>$HOST.cap</code>, e.g. <code>some-weird-problem/10.0.0.5.cap</code>. 
 It also logs in as a non-root user and then uses <code>sudo</code> to escalate privileges on these machines. The other options are pretty self-explanatory for anyone that has used <code>ssh</code> or <code>tcpdump</code>. My favorite thing is that you can specify the <code>ssh</code> listening port per host using <code>:</code> to separate the host from the port.</p>
 <p>Internally, <code>remotecap</code> is built on top of <code>asyncio</code>, using <code>asyncssh</code> to do <code>ssh</code> connections and stream the output and <code>aiofiles</code> to allow file I/O that won't block the event loop. 
 Because of this, it performs pretty well. I've been able to take captures on systems that are recieving 500 Mb/s or more.</p>
 <p>To use <code>remotecap</code>, you need to have <code>python &gt;= 3.6</code> on your system. <code>remotecap</code> has been tested on Linux and should <em>probably</em> work on MacOS. I have no clue if this will work on Windows, so sorry there!</p>
 <p>To install, simply do the following:  </p>
-<pre class="code literal-block"><span></span><span class="c1"># You could do this with system Python, but that's not really a great idea.</span>
+<pre class="code literal-block"><span class="c1"># You could do this with system Python, but that's not really a great idea.</span>
 <span class="c1"># All file paths below are just examples. You can put this </span>
 <span class="c1"># virtualenv wherever you want.</span>
 evan: python3 -m venv ~/remotecap
@@ -112,8 +237,6 @@ evan: <span class="nb">source</span> ~/remotecap/bin/activate
 <span class="c1"># Bunch of garbage prints</span>
 <span class="o">(</span>remotecap<span class="o">)</span> evan: remotecap --help
 </pre>
-
-
 <p>I may create packages for various distros using <code>fpm</code> at some point, but for now, just use <code>pip</code>.</p>
 <p>If you run into any issues or just want to see the source, head on over to <a href="https://github.com/evanfoster/remotecap"><code>remotecap on Github</code></a>.</p>
 <p>Happy trails!</p>
@@ -133,12 +256,10 @@ evan: <span class="nb">source</span> ~/remotecap/bin/activate
 <p>This is how I explain the flow of WCCP to customers. The client makes a request (1), the router redirects that request to the cache (2), the cache goes and fetches the request from the webserver via the router (3 + 4), the webserver responds to the cache (5 + 6), and finally the cache sends the response to the client (7 + 8). It's important for the traffic to flow in this "sideways T" configuration. If you don't do it this way, <em>things will break</em>. Next, a quick config primer.</p>
 <h3>WCCP config on the router or switch</h3>
 <p>The configuration for WCCP is stupid simple on the router. Let's say that in the example above, there are three VLANs. VLAN 10 is for the clients, VLAN 20 is for the cache, and VLAN 30 is for the internet. Next, let's say that we want to redirect port 80 TCP traffic (HTTP). WCCP uses service groups to allow you to redirect several ports at once. These can range from 0 to 100, but 0 is a special, static group that only redirects destination port 80 TCP traffic. On a router, it can also be written as <code>web-cache</code>. In this example, we'll use the <code>web-cache</code> service group. Here's what the config would look like on the router:</p>
-<pre class="code literal-block"><span></span><span class="n">ip</span> <span class="n">wccp</span> <span class="n">web</span><span class="o">-</span><span class="k">cache</span>
-<span class="n">interface</span> <span class="n">vlan</span> <span class="mi">10</span>
-    <span class="n">ip</span> <span class="n">wccp</span> <span class="n">web</span><span class="o">-</span><span class="k">cache</span> <span class="n">redirect</span> <span class="k">in</span>
+<pre class="code literal-block">ip wccp web-cache
+interface vlan 10
+    ip wccp web-cache redirect in
 </pre>
-
-
 <p>Seems too good to be true, right? Well, yes and no. That really <em>is</em> everything that's needed on the router. You'll need to configure your cache however. The cache needs to inform the router that it exists and that the router should send traffic to it. The cache needs to be set up with the same service group, and it needs to have the port you want to redirect. If you're using the <code>web-cache</code> service group then it <strong>must be TCP dest 80.</strong> I'm not going to show you this part because the configuration for a Superlumin cache vs. a Bluecoat vs. Cisco stuff is completely different.</p>
 <p>So, with that said here's what's happening.  WCCP will watch all packets coming <strong>in</strong> on VLAN 10. When it sees a packet that matches what the cache has told it to send over (in this case, port 80), it punts it over to the cache server at which point regular routing takes over. There are a couple different ways the traffic can get sent over to the cache, but in most cases just pick L2 redirect. It's the simplest and lowest overhead option. This is also configured on the cache. Now, onto the caveats!</p>
 <h3>Caveat Emptor</h3>
@@ -175,7 +296,7 @@ WCCP doesn't operate on switched traffic. What do I mean by that? Basically, if 
 <p><a href="https://github.com/svinota/pyroute2">pyroute2</a> is a Python library that uses <a href="https://en.wikipedia.org/wiki/Netlink">Netlink sockets</a> to interact with the Linux networking stack. It is, in my opinion, the single best way to do anything networking related on Linux machines. Beyond simple things like replacing subprocess calls to <code>ifconfig</code> to get and change networking information, it offers a fantastic way to monitor networking related changes (interfaces up and down, new neighbors) and perform actions based upon those. I'll show you how to do that in this post. First, you need to understand some things about Netlink.</p>
 <h3>Netlink basics</h3>
 <p>Netlink is super cool. With it, you can register a program to receive all Netlink messages, no polling required. There are quite a few different messages that Netlink can generate. I like to represent those as an enum in Python:</p>
-<pre class="code literal-block"><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<pre class="code literal-block"><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="k">class</span> <span class="nc">NetlinkEvents</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="c1"># A new neighbor has appeared</span>
     <span class="n">RTM_NEWNEIGH</span> <span class="o">=</span> <span class="s1">'RTM_NEWNEIGH'</span>
@@ -194,39 +315,29 @@ WCCP doesn't operate on switched traffic. What do I mean by that? Basically, if 
     <span class="c1"># A route has been removed from the routing table</span>
     <span class="n">RTM_DELROUTE</span> <span class="o">=</span> <span class="s1">'RTM_DELROUTE'</span>
 </pre>
-
-
 <p>This is not an all inclusive list of possible messages. If you want that, <a href="http://man7.org/linux/man-pages/man7/rtnetlink.7.html">this is a good place to start.</a></p>
 <p>Now that we have some Netlink events defined, let's put them to use by watching for new addresses. This is where we'll use pyroute2.</p>
 <h3>pyroute2 callbacks</h3>
 <p>First things first, let's import what we need from pyroute2. There are a couple of different ways to use pyroute2, but here I'm going to use IPDB.</p>
-<pre class="code literal-block"><span></span><span class="kn">from</span> <span class="nn">pyroute2</span> <span class="kn">import</span> <span class="n">IPDB</span>
+<pre class="code literal-block"><span class="kn">from</span> <span class="nn">pyroute2</span> <span class="kn">import</span> <span class="n">IPDB</span>
 <span class="n">ipdb</span> <span class="o">=</span> <span class="n">IPDB</span><span class="p">()</span>
 <span class="c1"># We'll use this later</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="n">pp</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre>
-
-
 <p>Next, we'll make our callback. This callback needs to have 3 arguments:</p>
-<pre class="code literal-block"><span></span><span class="k">def</span> <span class="nf">new_address_callback</span><span class="p">(</span><span class="n">ipdb</span><span class="p">,</span> <span class="n">netlink_message</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<pre class="code literal-block"><span class="k">def</span> <span class="nf">new_address_callback</span><span class="p">(</span><span class="n">ipdb</span><span class="p">,</span> <span class="n">netlink_message</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="n">NetlinkMessages</span><span class="o">.</span><span class="n">RTM_NEWADDR</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
         <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">netlink_message</span><span class="p">)</span>
 </pre>
-
-
 <p>The first two arguments are fairly obvious, but the third one is a bit vague. action is basically the type of message, so we can use this to filter out the stuff we don't care about. Now, we'll fire things up!</p>
-<pre class="code literal-block"><span></span><span class="n">addr_callback</span> <span class="o">=</span> <span class="n">ipdb</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">new_address_callback</span><span class="p">)</span>
+<pre class="code literal-block"><span class="n">addr_callback</span> <span class="o">=</span> <span class="n">ipdb</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">new_address_callback</span><span class="p">)</span>
 </pre>
-
-
 <p><code>register_callback</code> returns the ID of the callback which you'll need to cleanly stop it, so make sure you capture that! To test, we'll pop on over to a shell and add an address to <code>eth0</code>.</p>
-<pre class="code literal-block"><span></span><span class="o">[</span>evan@goliath ~<span class="o">]</span>$ sudo ip addr add dev eth0 <span class="m">192</span>.168.2.50/24
+<pre class="code literal-block"><span class="o">[</span>evan@goliath ~<span class="o">]</span>$ sudo ip addr add dev eth0 <span class="m">192</span>.168.2.50/24
 </pre>
-
-
 <p>Back in Python, we should now see something like this:</p>
-<pre class="code literal-block"><span></span><span class="p">{</span>  <span class="s1">'attrs'</span><span class="p">:</span> <span class="p">[</span>  <span class="p">(</span><span class="s1">'IFA_ADDRESS'</span><span class="p">,</span> <span class="s1">'192.168.2.50'</span><span class="p">),</span>
+<pre class="code literal-block"><span class="p">{</span>  <span class="s1">'attrs'</span><span class="p">:</span> <span class="p">[</span>  <span class="p">(</span><span class="s1">'IFA_ADDRESS'</span><span class="p">,</span> <span class="s1">'192.168.2.50'</span><span class="p">),</span>
                <span class="p">(</span><span class="s1">'IFA_LOCAL'</span><span class="p">,</span> <span class="s1">'192.168.2.50'</span><span class="p">),</span>
                <span class="p">(</span><span class="s1">'IFA_LABEL'</span><span class="p">,</span> <span class="s1">'eth0'</span><span class="p">),</span>
                <span class="p">(</span><span class="s1">'IFA_FLAGS'</span><span class="p">,</span> <span class="mi">129</span><span class="p">),</span>
@@ -234,7 +345,7 @@ WCCP doesn't operate on switched traffic. What do I mean by that? Basically, if 
    <span class="s1">'event'</span><span class="p">:</span> <span class="s1">'RTM_NEWADDR'</span><span class="p">,</span>
    <span class="s1">'family'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
    <span class="s1">'flags'</span><span class="p">:</span> <span class="mi">129</span><span class="p">,</span>
-   <span class="s1">'header'</span><span class="p">:</span> <span class="p">{</span>  <span class="s1">'error'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+   <span class="s1">'header'</span><span class="p">:</span> <span class="p">{</span>  <span class="s1">'error'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="s1">'flags'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
                 <span class="s1">'length'</span><span class="p">:</span> <span class="mi">84</span><span class="p">,</span>
                 <span class="s1">'pid'</span><span class="p">:</span> <span class="mi">27963</span><span class="p">,</span>
@@ -244,13 +355,9 @@ WCCP doesn't operate on switched traffic. What do I mean by that? Basically, if 
    <span class="s1">'prefixlen'</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
    <span class="s1">'scope'</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
 </pre>
-
-
 <p>Once you're finished, you can stop the callback as such:</p>
-<pre class="code literal-block"><span></span><span class="n">ipdb</span><span class="o">.</span><span class="n">unregister_callback</span><span class="p">(</span><span class="n">addr_callback</span><span class="p">)</span>
+<pre class="code literal-block"><span class="n">ipdb</span><span class="o">.</span><span class="n">unregister_callback</span><span class="p">(</span><span class="n">addr_callback</span><span class="p">)</span>
 </pre>
-
-
 <p>Nice and simple, right?</p>
 <h3>Final notes</h3>
 <p>I've used pyroute2 both professionally and personally and have found it to be a necessity when dealing with any sort of Linux networking. I've barely scratched the surface of what it can do; <a href="http://docs.pyroute2.org/general.html">check out the docs if you want to see how powerful it is.</a> It's a really great library and I wish it was used more widely.</p>

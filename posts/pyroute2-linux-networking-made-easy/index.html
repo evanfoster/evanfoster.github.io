@@ -39,7 +39,7 @@
     
     
     </nav><footer id="footer"><span class="copyright">
-              Contents © 2019         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+              Contents © 2021         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
             </span>
             
             
@@ -62,7 +62,7 @@
 <p><a href="https://github.com/svinota/pyroute2">pyroute2</a> is a Python library that uses <a href="https://en.wikipedia.org/wiki/Netlink">Netlink sockets</a> to interact with the Linux networking stack. It is, in my opinion, the single best way to do anything networking related on Linux machines. Beyond simple things like replacing subprocess calls to <code>ifconfig</code> to get and change networking information, it offers a fantastic way to monitor networking related changes (interfaces up and down, new neighbors) and perform actions based upon those. I'll show you how to do that in this post. First, you need to understand some things about Netlink.</p>
 <h3>Netlink basics</h3>
 <p>Netlink is super cool. With it, you can register a program to receive all Netlink messages, no polling required. There are quite a few different messages that Netlink can generate. I like to represent those as an enum in Python:</p>
-<pre class="code literal-block"><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<pre class="code literal-block"><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="k">class</span> <span class="nc">NetlinkEvents</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="c1"># A new neighbor has appeared</span>
     <span class="n">RTM_NEWNEIGH</span> <span class="o">=</span> <span class="s1">'RTM_NEWNEIGH'</span>
@@ -81,39 +81,29 @@
     <span class="c1"># A route has been removed from the routing table</span>
     <span class="n">RTM_DELROUTE</span> <span class="o">=</span> <span class="s1">'RTM_DELROUTE'</span>
 </pre>
-
-
 <p>This is not an all inclusive list of possible messages. If you want that, <a href="http://man7.org/linux/man-pages/man7/rtnetlink.7.html">this is a good place to start.</a></p>
 <p>Now that we have some Netlink events defined, let's put them to use by watching for new addresses. This is where we'll use pyroute2.</p>
 <h3>pyroute2 callbacks</h3>
 <p>First things first, let's import what we need from pyroute2. There are a couple of different ways to use pyroute2, but here I'm going to use IPDB.</p>
-<pre class="code literal-block"><span></span><span class="kn">from</span> <span class="nn">pyroute2</span> <span class="kn">import</span> <span class="n">IPDB</span>
+<pre class="code literal-block"><span class="kn">from</span> <span class="nn">pyroute2</span> <span class="kn">import</span> <span class="n">IPDB</span>
 <span class="n">ipdb</span> <span class="o">=</span> <span class="n">IPDB</span><span class="p">()</span>
 <span class="c1"># We'll use this later</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="n">pp</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre>
-
-
 <p>Next, we'll make our callback. This callback needs to have 3 arguments:</p>
-<pre class="code literal-block"><span></span><span class="k">def</span> <span class="nf">new_address_callback</span><span class="p">(</span><span class="n">ipdb</span><span class="p">,</span> <span class="n">netlink_message</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<pre class="code literal-block"><span class="k">def</span> <span class="nf">new_address_callback</span><span class="p">(</span><span class="n">ipdb</span><span class="p">,</span> <span class="n">netlink_message</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="n">NetlinkMessages</span><span class="o">.</span><span class="n">RTM_NEWADDR</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
         <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">netlink_message</span><span class="p">)</span>
 </pre>
-
-
 <p>The first two arguments are fairly obvious, but the third one is a bit vague. action is basically the type of message, so we can use this to filter out the stuff we don't care about. Now, we'll fire things up!</p>
-<pre class="code literal-block"><span></span><span class="n">addr_callback</span> <span class="o">=</span> <span class="n">ipdb</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">new_address_callback</span><span class="p">)</span>
+<pre class="code literal-block"><span class="n">addr_callback</span> <span class="o">=</span> <span class="n">ipdb</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">new_address_callback</span><span class="p">)</span>
 </pre>
-
-
 <p><code>register_callback</code> returns the ID of the callback which you'll need to cleanly stop it, so make sure you capture that! To test, we'll pop on over to a shell and add an address to <code>eth0</code>.</p>
-<pre class="code literal-block"><span></span><span class="o">[</span>evan@goliath ~<span class="o">]</span>$ sudo ip addr add dev eth0 <span class="m">192</span>.168.2.50/24
+<pre class="code literal-block"><span class="o">[</span>evan@goliath ~<span class="o">]</span>$ sudo ip addr add dev eth0 <span class="m">192</span>.168.2.50/24
 </pre>
-
-
 <p>Back in Python, we should now see something like this:</p>
-<pre class="code literal-block"><span></span><span class="p">{</span>  <span class="s1">'attrs'</span><span class="p">:</span> <span class="p">[</span>  <span class="p">(</span><span class="s1">'IFA_ADDRESS'</span><span class="p">,</span> <span class="s1">'192.168.2.50'</span><span class="p">),</span>
+<pre class="code literal-block"><span class="p">{</span>  <span class="s1">'attrs'</span><span class="p">:</span> <span class="p">[</span>  <span class="p">(</span><span class="s1">'IFA_ADDRESS'</span><span class="p">,</span> <span class="s1">'192.168.2.50'</span><span class="p">),</span>
                <span class="p">(</span><span class="s1">'IFA_LOCAL'</span><span class="p">,</span> <span class="s1">'192.168.2.50'</span><span class="p">),</span>
                <span class="p">(</span><span class="s1">'IFA_LABEL'</span><span class="p">,</span> <span class="s1">'eth0'</span><span class="p">),</span>
                <span class="p">(</span><span class="s1">'IFA_FLAGS'</span><span class="p">,</span> <span class="mi">129</span><span class="p">),</span>
@@ -121,7 +111,7 @@
    <span class="s1">'event'</span><span class="p">:</span> <span class="s1">'RTM_NEWADDR'</span><span class="p">,</span>
    <span class="s1">'family'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
    <span class="s1">'flags'</span><span class="p">:</span> <span class="mi">129</span><span class="p">,</span>
-   <span class="s1">'header'</span><span class="p">:</span> <span class="p">{</span>  <span class="s1">'error'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+   <span class="s1">'header'</span><span class="p">:</span> <span class="p">{</span>  <span class="s1">'error'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="s1">'flags'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
                 <span class="s1">'length'</span><span class="p">:</span> <span class="mi">84</span><span class="p">,</span>
                 <span class="s1">'pid'</span><span class="p">:</span> <span class="mi">27963</span><span class="p">,</span>
@@ -131,13 +121,9 @@
    <span class="s1">'prefixlen'</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
    <span class="s1">'scope'</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
 </pre>
-
-
 <p>Once you're finished, you can stop the callback as such:</p>
-<pre class="code literal-block"><span></span><span class="n">ipdb</span><span class="o">.</span><span class="n">unregister_callback</span><span class="p">(</span><span class="n">addr_callback</span><span class="p">)</span>
+<pre class="code literal-block"><span class="n">ipdb</span><span class="o">.</span><span class="n">unregister_callback</span><span class="p">(</span><span class="n">addr_callback</span><span class="p">)</span>
 </pre>
-
-
 <p>Nice and simple, right?</p>
 <h3>Final notes</h3>
 <p>I've used pyroute2 both professionally and personally and have found it to be a necessity when dealing with any sort of Linux networking. I've barely scratched the surface of what it can do; <a href="http://docs.pyroute2.org/general.html">check out the docs if you want to see how powerful it is.</a> It's a really great library and I wish it was used more widely.</p>

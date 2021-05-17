@@ -7,30 +7,26 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>http://fos.tech/categories/capture.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/categories/cat_posts.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/categories/remotecap.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/categories/tcpdump.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://fos.tech/galleries/rss.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/rss.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:47:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://fos.tech/sitemap.xml</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:47:00Z</lastmod>
  </sitemap>
 </sitemapindex>

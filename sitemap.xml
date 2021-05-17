@@ -7,66 +7,66 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://fos.tech/</loc>
-  <lastmod>2018-05-05T23:24:00Z</lastmod>
+  <lastmod>2021-05-17T15:43:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/2016/</loc>
-  <lastmod>2016-11-10T00:24:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/2018/</loc>
-  <lastmod>2018-05-05T23:24:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://fos.tech/2021/</loc>
+  <lastmod>2021-05-17T15:43:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/archive.html</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/categories/</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/categories/capture/</loc>
-  <lastmod>2018-05-06T00:34:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/categories/cat_posts/</loc>
-  <lastmod>2019-06-07T03:26:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/categories/remotecap/</loc>
-  <lastmod>2018-05-06T00:34:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/categories/tcpdump/</loc>
-  <lastmod>2018-05-06T00:34:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/galleries/</loc>
-  <lastmod>2016-11-10T00:24:00Z</lastmod>
- </url>
- <url>
-  <loc>http://fos.tech/listings/</loc>
-  <lastmod>2016-11-10T00:24:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/pages/resume/</loc>
-  <lastmod>2016-11-10T00:24:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/pages/resume/index.src.html</loc>
-  <lastmod>2016-11-10T00:16:00Z</lastmod>
+  <lastmod>2021-05-17T15:41:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/posts/easy-packet-traces-using-remotecap/</loc>
-  <lastmod>2018-05-05T23:24:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/posts/pyroute2-linux-networking-made-easy/</loc>
-  <lastmod>2016-11-10T00:29:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://fos.tech/posts/the-solid-steel-yarn-winder/</loc>
+  <lastmod>2021-05-17T15:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://fos.tech/posts/wccp-redundancy-and-clustering-of-caches-and-wan-optimizers/</loc>
-  <lastmod>2016-11-11T01:57:00Z</lastmod>
+  <lastmod>2021-05-17T15:42:00Z</lastmod>
  </url>
 </urlset>

@@ -40,7 +40,7 @@
     
     
     </nav><footer id="footer"><span class="copyright">
-              Contents © 2019         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+              Contents © 2021         <a href="mailto:evan@fos.tech">Evan Foster</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
             </span>
             
             
@@ -67,12 +67,10 @@
 <p>This is how I explain the flow of WCCP to customers. The client makes a request (1), the router redirects that request to the cache (2), the cache goes and fetches the request from the webserver via the router (3 + 4), the webserver responds to the cache (5 + 6), and finally the cache sends the response to the client (7 + 8). It's important for the traffic to flow in this "sideways T" configuration. If you don't do it this way, <em>things will break</em>. Next, a quick config primer.</p>
 <h3>WCCP config on the router or switch</h3>
 <p>The configuration for WCCP is stupid simple on the router. Let's say that in the example above, there are three VLANs. VLAN 10 is for the clients, VLAN 20 is for the cache, and VLAN 30 is for the internet. Next, let's say that we want to redirect port 80 TCP traffic (HTTP). WCCP uses service groups to allow you to redirect several ports at once. These can range from 0 to 100, but 0 is a special, static group that only redirects destination port 80 TCP traffic. On a router, it can also be written as <code>web-cache</code>. In this example, we'll use the <code>web-cache</code> service group. Here's what the config would look like on the router:</p>
-<pre class="code literal-block"><span></span><span class="n">ip</span> <span class="n">wccp</span> <span class="n">web</span><span class="o">-</span><span class="k">cache</span>
-<span class="n">interface</span> <span class="n">vlan</span> <span class="mi">10</span>
-    <span class="n">ip</span> <span class="n">wccp</span> <span class="n">web</span><span class="o">-</span><span class="k">cache</span> <span class="n">redirect</span> <span class="k">in</span>
+<pre class="code literal-block">ip wccp web-cache
+interface vlan 10
+    ip wccp web-cache redirect in
 </pre>
-
-
 <p>Seems too good to be true, right? Well, yes and no. That really <em>is</em> everything that's needed on the router. You'll need to configure your cache however. The cache needs to inform the router that it exists and that the router should send traffic to it. The cache needs to be set up with the same service group, and it needs to have the port you want to redirect. If you're using the <code>web-cache</code> service group then it <strong>must be TCP dest 80.</strong> I'm not going to show you this part because the configuration for a Superlumin cache vs. a Bluecoat vs. Cisco stuff is completely different.</p>
 <p>So, with that said here's what's happening.  WCCP will watch all packets coming <strong>in</strong> on VLAN 10. When it sees a packet that matches what the cache has told it to send over (in this case, port 80), it punts it over to the cache server at which point regular routing takes over. There are a couple different ways the traffic can get sent over to the cache, but in most cases just pick L2 redirect. It's the simplest and lowest overhead option. This is also configured on the cache. Now, onto the caveats!</p>
 <h3>Caveat Emptor</h3>
